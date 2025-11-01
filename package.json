@@ -1,6 +1,7 @@
 {
   "name": "pixelboof",
   "private": true,
+  "license": "Apache-2.0",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -20,7 +21,7 @@
     "react": "latest",
     "react-dom": "latest",
     "zustand": "latest",
-     "serve": "latest"
+    "serve": "latest"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

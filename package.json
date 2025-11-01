@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "npm run build && serve -s dist"
+    "start": "npm run build && serve -s dist -l $PORT"
   },
   "dependencies": {
     "@google/genai": "latest",

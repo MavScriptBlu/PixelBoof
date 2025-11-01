@@ -1,0 +1,8 @@
+# .github/dependabot.yml
+
+version: 2
+updates:
+  - package-ecosystem: "npm" # <--- This tells Dependabot to look for package.json
+    directory: "/"           # Location of package.json (the root of repo)
+    schedule:
+      interval: "weekly"     # How often to check for updates

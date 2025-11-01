@@ -1,0 +1,94 @@
+li {
+  /* aspect-ratio: 1; */
+  position: relative;
+}
+
+li:hover .deleteBtn {
+  scale: 1;
+}
+
+li .photo {
+  overflow: hidden;
+  border: 2px solid #9a8c98;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+li .photo:hover {
+  border-color: #f7f7f7;
+}
+
+li .emoji {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  z-index: 1;
+  font-size: 24px;
+  text-shadow: 2px 2px 0 #000;
+}
+
+li img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+li.isBusy {
+  position: relative;
+}
+
+li.isBusy img {
+  filter: brightness(0.4);
+}
+
+li.isBusy:before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 25%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.2) 75%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite ease-in-out;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.circleBtn {
+  position: absolute;
+  top: -16px;
+  right: -16px;
+  background: #111;
+  z-index: 1;
+  font-size: 23px;
+  padding: 5px;
+  border-radius: 50%;
+  border: 2px solid #f7f7f7;
+  box-shadow: 2px 2px 0 #000;
+}
+
+.circleBtn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 #000;
+}
+
+.deleteBtn {
+  scale: 0;
+  translate: 25% -25%;
+  transition: scale 0.2s;
+}
+
+@media (max-width: 768px) {
+  .circleBtn {
+    top: -10px;
+    right: -10px;
+    font-size: 20px;
+    padding: 4px;
+  }
+}

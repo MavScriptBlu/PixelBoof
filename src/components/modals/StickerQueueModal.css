@@ -1,0 +1,121 @@
+.sticker-queue-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 90%;
+  max-width: 1200px;
+  background: #1a1c2c;
+  border: 2px solid #f7f7f7;
+  z-index: 102;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 4px 0px #000;
+}
+
+.sticker-queue-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 2px solid #f7f7f7;
+  position: relative;
+}
+
+.sticker-queue-header h2 {
+  font-size: 16px;
+}
+
+.sticker-queue-header .circleBtn {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+}
+
+.sticker-queue-actions {
+  display: flex;
+  gap: 15px;
+  margin-left: auto;
+  margin-right: 40px;
+}
+
+.sticker-queue-actions .button {
+  padding: 8px 16px;
+}
+
+.downloadAllBtn {
+  background: #4a4e69;
+}
+
+.clearQueueBtn {
+  background: #c13a3a;
+}
+
+.sticker-queue-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+}
+
+.sticker-queue-content ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 15px;
+}
+
+.sticker-queue-content li {
+  aspect-ratio: 1;
+  position: relative;
+}
+
+.sticker-queue-content li:hover .deleteBtn {
+  scale: 1;
+}
+
+.sticker-queue-content li .photo {
+  overflow: hidden;
+  border: 2px solid #9a8c98;
+  width: 100%;
+  height: 100%;
+}
+
+.sticker-queue-content li .photo:hover {
+  border-color: #f7f7f7;
+}
+
+.sticker-queue-content li .emoji {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  z-index: 1;
+  font-size: 24px;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.sticker-queue-content li img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .sticker-queue-header h2 {
+    font-size: 14px;
+  }
+
+  .sticker-queue-actions {
+    gap: 10px;
+  }
+
+  .sticker-queue-actions .button {
+    font-size: 10px;
+    padding: 8px 12px;
+  }
+
+  .sticker-queue-content ul {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 10px;
+  }
+}

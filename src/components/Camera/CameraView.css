@@ -1,0 +1,122 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+.camera-view-container {
+  /* This prevents the view from getting excessively large on wide screens */
+  max-width: 900px;
+  max-height: 90vh; /* Keeps it within the viewport height, adjust as needed */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto; /* Center it horizontally */
+}
+
+.video {
+  overflow: hidden;
+  position: relative;
+  flex: 1;
+  background-image: linear-gradient(to bottom, #000, #111);
+  touch-action: none; /* Prevent default touch actions like scrolling */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease-out;
+}
+
+.flash {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  opacity: 1;
+  animation: flash 0.3s ease-out forwards;
+}
+
+@keyframes flash {
+  0% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.startButton {
+  position: absolute;
+  inset: 0;
+  text-align: center;
+  font-size: 14px;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.startButton h1 {
+  font-size: 24px;
+}
+
+.camera-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 0 0 20px 0;
+  flex-shrink: 0;
+}
+
+.selectorsContainer {
+  background: #22223b;
+  width: 100%;
+  border-top: 2px solid #f7f7f7;
+}
+
+
+/* - SHUTTER STYLES - */
+.shutter {
+  background: #22223b;
+  border: 2px solid #f7f7f7;
+  border-radius: 50%;
+  padding: 10px;
+  box-shadow: 4px 4px 0 #000;
+}
+
+.shutter .icon {
+  font-size: 42px;
+  color: #ddd;
+}
+
+.shutter:hover {
+  background: #c13a3a;
+}
+
+.shutter:hover .icon {
+  color: #fff;
+}
+
+.shutter:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #000;
+}
+
+@media (max-width: 768px) {
+  .camera-footer {
+    gap: 15px;
+    padding-bottom: 15px;
+  }
+
+  .shutter .icon {
+    font-size: 36px;
+  }
+}

@@ -1,0 +1,66 @@
+/* -- These are the styles for both the Disclaimer modal and the Tutorial modal -- */
+
+
+.panel-overlay {
+  position: fixed;
+  inset: 0;
+  background: #000000e6;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-out;
+  padding: 20px;
+}
+
+.panel {
+  background: #1a1c2c;
+  border: 2px solid #f7f7f7;
+  padding: 30px;
+  text-align: center;
+  max-width: 90%;
+  width: 480px;
+  box-shadow: 4px 4px 0px #000;
+}
+
+.panel h2 {
+  font-size: 16px;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.panel-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+.panel-step {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.panel-step .icon {
+  font-size: 28px;
+  background: #22223b;
+  border: 2px solid #9a8c98;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.panel .button {
+  width: 100%;
+  padding: 15px;
+  justify-content: center;
+  font-size: 14px;
+}

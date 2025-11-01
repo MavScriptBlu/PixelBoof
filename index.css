@@ -1,0 +1,167 @@
+/* --- GLOBAL & BASE STYLES --- */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+* ::selection {
+  background: #f7f7f7;
+  color: #1a1c2c;
+}
+
+:root {
+  background: #1a1c2c;
+  color: #f7f7f7;
+  font-family:
+    'Press Start 2P',
+    monospace;
+  image-rendering: pixelated;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 400;
+}
+
+li {
+  list-style: none;
+}
+
+input,
+textarea {
+  font-family:
+    'Press Start 2P',
+    monospace;
+  background: none;
+  color: #f7f7f7;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  resize: none;
+  -webkit-user-select: text;
+  user-select: text;
+  line-height: 1.5;
+}
+
+input::placeholder,
+textarea::placeholder {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+select {
+  appearance: none;
+  font-family: inherit;
+  padding: 10px;
+  background: #111;
+  color: #f7f7f7;
+  border-radius: 0;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+button {
+  font-family:
+    'Press Start 2P',
+    monospace;
+  background: none;
+  color: #f7f7f7;
+  border: none;
+  font-size: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+button:focus {
+  outline: none;
+}
+
+button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button .icon {
+  display: block;
+}
+
+.button {
+  display: inline-flex;
+  padding: 10px 16px;
+  border-radius: 0;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  color: #f7f7f7;
+  border: 2px solid #f7f7f7;
+  text-transform: uppercase;
+  background: #4a4e69;
+  box-shadow: 3px 3px 0 #000;
+}
+
+.button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #000;
+}
+
+.icon {
+  font-family: Material Symbols Outlined;
+  font-weight: 300;
+  line-height: 1;
+}
+
+/* --- LAYOUT & STRUCTURE --- */
+
+main {
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.app-content {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* --- RESPONSIVE STYLES --- */
+
+@media (max-width: 768px) {
+  .button {
+    font-size: 10px;
+    padding: 8px 16px;
+  }
+}

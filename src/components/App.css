@@ -1,0 +1,7 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 101;
+  animation: fadeIn 0.3s ease-out;
+}

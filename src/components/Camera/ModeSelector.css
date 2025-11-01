@@ -1,0 +1,80 @@
+.modeSelector {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  padding: 10px;
+  overflow: auto;
+}
+
+.modeSelector li {
+  position: relative;
+}
+
+.modeSelector button {
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+  white-space: nowrap;
+  gap: 8px;
+  position: relative;
+  background: transparent;
+  padding: 5px 10px;
+}
+
+.modeSelector button.active {
+  opacity: 1 !important;
+  color: #ffcc00;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.selector-caret {
+  animation: blink 1s step-end infinite;
+}
+
+
+/* -- TOOLTIP STYLES -- */
+
+.tooltip {
+  position: fixed;
+  background: #111;
+  padding: 8px 12px;
+  font-size: 10px;
+  z-index: 1000;
+  border: 2px solid #f7f7f7;
+  box-shadow: 3px 3px 0 #000;
+  pointer-events: none;
+  width: 250px;
+  white-space: normal;
+  color: #ccc;
+  line-height: 1.4;
+}
+
+.tooltip h4 {
+  text-transform: uppercase;
+  font-size: 10px;
+  color: #777;
+  margin-top: 5px;
+}
+
+@media (max-width: 768px) {
+  .tooltip {
+    display: none;
+  }
+  
+  .modeSelector {
+    padding: 8px;
+    gap: 12px;
+  }
+
+  .modeSelector button {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+}

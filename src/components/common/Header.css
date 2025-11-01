@@ -1,0 +1,50 @@
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background: #111;
+  border-bottom: 2px solid #f7f7f7;
+  flex-shrink: 0;
+}
+
+.app-header h1 {
+  font-size: 16px;
+  color: #ffcc00;
+  text-shadow: 2px 2px 0 #e64a19;
+}
+
+.viewToggle {
+  background: #4a4e69;
+  border: 2px solid #f7f7f7;
+  padding: 8px;
+  font-size: 10px;
+  text-transform: uppercase;
+  gap: 8px;
+  box-shadow: 2px 2px 0 #000;
+}
+
+.viewToggle:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+.viewToggle .icon {
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .app-header h1 {
+    font-size: 14px;
+  }
+
+  .viewToggle {
+    font-size: 8px;
+    padding: 6px;
+    gap: 4px;
+  }
+
+  .viewToggle .icon {
+    font-size: 16px;
+  }
+}

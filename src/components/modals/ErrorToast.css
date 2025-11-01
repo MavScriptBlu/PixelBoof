@@ -1,0 +1,26 @@
+.error-toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #c13a3a;
+  color: #f7f7f7;
+  padding: 15px 20px;
+  border: 2px solid #f7f7f7;
+  box-shadow: 4px 4px 0 #000;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 12px;
+  animation: fadeIn 0.3s ease-out;
+  max-width: 90%;
+}
+
+.error-toast p {
+  line-height: 1.4;
+}
+
+.error-toast button {
+  font-size: 20px;
+}

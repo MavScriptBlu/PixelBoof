@@ -1,0 +1,7 @@
+{
+  "name": "PixelBoof",
+  "description": "Transform yourself into a nostolgic character in sticker form.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

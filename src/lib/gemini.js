@@ -11,7 +11,7 @@ import {limitFunction} from 'p-limit'
 const timeoutMs = 123_333 // Max time for a single API request.
 const maxRetries = 5 // Max number of retries on failure.
 const baseDelay = 3_000 // Base delay for exponential backoff.
-const ai = new GoogleGenAI({})
+const ai = new GoogleGenAI({apiKey: import.meta.env.VITE_GEMINI_API_KEY})
 
 /**
  * A rate-limited and resilient wrapper around the Google GenAI API call.

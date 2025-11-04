@@ -128,8 +128,7 @@ _To summarize, the app's core magic comes from one primary external API (Google 
 
 ---
 
-
-## You can make your own! Just follow these steps ---- 🚀 Deployment to Google Cloud Run
+## Deploying Your Own Version to Google Cloud Run 🚀
 
 ### Prerequisites
 

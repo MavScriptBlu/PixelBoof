@@ -125,7 +125,10 @@ _To summarize, the app's core magic comes from one primary external API (Google 
 
 - **src/lib/imageData.js**: An in-memory cache for base64 image data to keep the main state performant.
 
-## 🚀 Deployment to Google Cloud Run
+
+---
+
+## Deploying Your Own Version to Google Cloud Run 🚀
 
 ### Prerequisites
 
@@ -192,26 +195,3 @@ Since this is a client-side app, the API key will be visible in the browser. Pro
 6. Click "Save"
 
 Now your API key will ONLY work from your deployed domain, preventing unauthorized use even if someone finds it.
-
-### Alternative: Manual Docker Build
-
-If you prefer to build the Docker image manually:
-
-```bash
-# Build the image
-docker build --build-arg VITE_GEMINI_API_KEY=your_api_key_here -t pixelbooth .
-
-# Test locally
-docker run -p 8080:8080 pixelbooth
-
-# Tag and push to Google Container Registry
-docker tag pixelbooth gcr.io/YOUR_PROJECT_ID/pixelbooth
-docker push gcr.io/YOUR_PROJECT_ID/pixelbooth
-
-# Deploy to Cloud Run
-gcloud run deploy pixelbooth \
-  --image gcr.io/YOUR_PROJECT_ID/pixelbooth \
-  --platform managed \
-  --region us-central1 \
-  --allow-unauthenticated
-```

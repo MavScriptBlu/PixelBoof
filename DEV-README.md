@@ -53,8 +53,10 @@ The Cloud Build trigger will automatically:
 If auto-deploy isn't working, you can manually deploy:
 
 ```bash
-gcloud builds submit --config=cloudbuild.yaml --substitutions=_VITE_GEMINI_API_KEY=AIzaSyD7OgwkxfoR-mSFyJLVI5bdbmuOMAD8k44
+gcloud builds submit --config=cloudbuild.yaml --substitutions=_VITE_GEMINI_API_KEY=YOUR_API_KEY_HERE
 ```
+
+**Note:** Replace `YOUR_API_KEY_HERE` with your actual Gemini API key. Keep this command in a separate secure note, not in version control.
 
 ## Local Development Setup
 

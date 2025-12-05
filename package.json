@@ -22,7 +22,7 @@
     "react-dom": "latest",
     "zustand": "latest",
     "serve": "latest",
-    "@vitejs/plugin-react": "^5.0.0",
+    "@vitejs/plugin-react": "^5.1.1",
     "typescript": "~5.8.2",
     "vite": "^7.2.4"
   },

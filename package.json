@@ -11,22 +11,22 @@
     "start": "npm run build && serve -s dist -l $PORT"
   },
   "dependencies": {
-    "@google/genai": "^1.31.0",
+    "@google/genai": "^1.34.0",
+    "@vitejs/plugin-react": "^5.1.1",
     "auto-zustand-selectors-hook": "^3.0.1",
     "gifenc": "^1.0.3",
-    "immer": "^11.0.1",
+    "immer": "^11.1.0",
     "jszip": "^3.10.1",
     "lodash.shuffle": "^4.2.0",
     "p-limit": "^7.2.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.1",
-    "zustand": "^5.0.9",
     "serve": "^14.2.5",
-    "@vitejs/plugin-react": "^5.1.1",
     "typescript": "~5.9.3",
-    "vite": "^7.3.0"
+    "vite": "^7.3.0",
+    "zustand": "^5.0.9"
   },
   "devDependencies": {
-    "@types/node": "^24.10.1"
+    "@types/node": "^25.0.3"
   }
 }

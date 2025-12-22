@@ -29,7 +29,7 @@ echo Deploying to Cloud Run with API key from .env...
 echo API key: %VITE_GEMINI_API_KEY:~0,20%... (showing first 20 chars)
 echo.
 
-gcloud run deploy pixelbooth --source . --platform managed --region us-central1 --allow-unauthenticated --build-arg VITE_GEMINI_API_KEY=%VITE_GEMINI_API_KEY%
+gcloud run deploy pixelbooth --source . --platform managed --region us-central1 --allow-unauthenticated --set-build-env-vars VITE_GEMINI_API_KEY=%VITE_GEMINI_API_KEY%
 
 echo.
 echo Deployment complete!

@@ -22,7 +22,7 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
         with:
-          project_id: device-streaming-4a95fdb3
+          project_id: gen-lang-client-0167114643
 
       - name: Build and Deploy to Cloud Run
         run: |

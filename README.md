@@ -9,7 +9,7 @@ Originally named Pixel Booth, but due to Big-Money-Makers taking the fun outta e
 
 Pixel Boof is an interactive web application that captures images from your webcam, applies a selected artistic style via a generative AI model, and presents you with a unique, stylized portrait. Whether you want to see yourself as an 8-bit hero, a fighter from a classic arcade game, or a character from a fantasy RPG, Pixel Boof makes it happen in a few clicks.
 
-## ✨ Features
+## ✨ Features 
 
 - **Live Camera Preview**: See a real-time feed from your webcam.
 

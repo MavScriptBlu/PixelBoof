@@ -55,7 +55,7 @@ export default limitFunction(
           {
             model,
             config: {responseModalities: [Modality.IMAGE]},
-            contents: {parts}
+            contents: parts
           },
           {signal}
         )

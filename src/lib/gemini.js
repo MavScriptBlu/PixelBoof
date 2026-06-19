@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {GoogleGenAI, Modality} from '@google/genai'
+import {GoogleGenAI} from '@google/genai'
 import {limitFunction} from 'p-limit'
 
 // --- CONFIGURATION --- //
@@ -51,10 +51,12 @@ export default limitFunction(
         parts.push({text: prompt})
 
         // Make the API call to the Gemini model.
+        // NOTE: responseModalities must include both 'TEXT' and 'IMAGE' for the
+        // gemini-2.5-flash-image model — passing only ['IMAGE'] causes generation to fail.
         const modelPromise = ai.models.generateContent(
           {
             model,
-            config: {responseModalities: [Modality.IMAGE]},
+            config: {responseModalities: ['TEXT', 'IMAGE']},
             contents: parts
           },
           {signal}

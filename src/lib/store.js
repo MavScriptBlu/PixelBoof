@@ -10,15 +10,20 @@ import JSZip from 'jszip'
 import shuffle from 'lodash.shuffle'
 
 import modes from './modes'
+import themes from './themes'
 import imageData from './imageData'
 import gen from './gemini'
+import {createStickerPack, addStickerToPack, verifyTelegramLogin} from './telegram'
+import {exportForSignal} from './signal'
+import {removeChromaKeyBackground, CHROMA_KEY_HEX} from './backgroundRemoval'
 
 const model = 'gemini-2.5-flash-image'
 const modeKeys = Object.keys(modes)
 
 // A consistent suffix added to all prompts to guide the AI into generating a sticker-like image.
-const stickerPromptSuffix =
-  'The final image should be a die-cut sticker of the character with a thick white border, isolated on a flat black background, with no drop shadow.'
+// Background is a solid chroma-key color (not black) so we can cleanly cut it to
+// transparency afterward — see backgroundRemoval.js.
+const stickerPromptSuffix = `The final image should be a die-cut sticker of the character with a thick white border, isolated on a flat solid background of color ${CHROMA_KEY_HEX} (pure chroma key green), with no drop shadow. The background must be a single flat, uniform color with no gradients, texture, or shading.`
 
 
 /*
@@ -37,9 +42,20 @@ const useStoreBase = create(
     zoom: 1, // The zoom level for the camera view.
     showTutorial: false, // Whether to display the initial tutorial modal.
     showDisclaimer: false, // Whether to display the disclaimer modal.
+    showThemeSelector: false, // Whether to display the theme picker (shown every session after onboarding).
+    activeTheme: 'gaming', // The currently selected theme key from themes.js.
     stickerQueue: [], // An array of photo IDs saved for batch download.
     stickerQueueDownloading: false, // Flag indicating if the sticker queue zip is being generated.
     errorMessage: null, // A string for displaying global error messages.
+    successMessage: null, // A string for displaying global success messages (e.g. "pack created!").
+
+    // Telegram export state. `telegramAuth` is the verified login payload from the
+    // widget; `telegramPackName` is the user's single PixelBoof sticker pack on
+    // Telegram, created lazily on first export and reused for every export after.
+    telegramAuth: JSON.parse(localStorage.getItem('pixelBoothTelegramAuth') || 'null'),
+    telegramPackName: localStorage.getItem('pixelBoothTelegramPackName') || null,
+    telegramExporting: false,
+    signalExporting: false,
 
     // --- ACTIONS --- //
 
@@ -65,7 +81,8 @@ const useStoreBase = create(
 
     /*
      * Checks if the user has previously dismissed the tutorial.
-     * If not, it sets the `showTutorial` state to true.
+     * If not, shows the tutorial. If they have, jumps straight to
+     * the theme selector (which always shows every session).
      */
     checkTutorial: () => {
       const tutorialDismissed = localStorage.getItem(
@@ -73,15 +90,30 @@ const useStoreBase = create(
       )
       if (!tutorialDismissed) {
         set({showTutorial: true})
+      } else {
+        set({showThemeSelector: true})
       }
     },
 
     /*
-     * Persists the tutorial dismissal in localStorage and hides the tutorial.
+     * Persists the tutorial dismissal in localStorage, hides the tutorial,
+     * and opens the theme selector.
      */
     dismissTutorial: () => {
       localStorage.setItem('pixelBoothTutorialDismissed', 'true')
-      set({showTutorial: false})
+      set({showTutorial: false, showThemeSelector: true})
+    },
+
+    /*
+     * Called when the user picks a theme from the ThemeSelector screen.
+     * Sets the active theme, hides the selector, and resets activeMode
+     * to the first non-custom mode in the chosen theme.
+     * @param {string} key - A theme key from themes.js (e.g. 'gaming', 'pride').
+     */
+    selectTheme: key => {
+      const themeModes = themes[key]?.modes || []
+      const firstMode = themeModes.find(m => m !== 'custom') || themeModes[0] || Object.keys(modes)[0]
+      set({activeTheme: key, showThemeSelector: false, activeMode: firstMode})
     },
 
     /*
@@ -101,14 +133,17 @@ const useStoreBase = create(
      */
     snapPhoto: async (b64, customPrompt) => {
       const id = crypto.randomUUID()
-      const {activeMode} = get()
+      const {activeMode, activeTheme} = get()
       imageData.inputs[id] = b64 // Store input image temporarily
 
       // Determine the effective mode, handling the 'random' lens option.
-      const modeKeysWithoutCustom = modeKeys.filter(key => key !== 'custom')
+      // Random only picks from the current theme's modes so the result
+      // stays on-theme (e.g. random in Pride won't land on a gaming mode).
+      const themeModeKeys = themes[activeTheme]?.modes || modeKeys
+      const randomPool = themeModeKeys.filter(key => key !== 'custom' && key !== 'random')
       const effectiveMode =
         activeMode === 'random'
-          ? shuffle(modeKeysWithoutCustom)[0]
+          ? shuffle(randomPool)[0]
           : activeMode
 
       // Add a new photo object to the store in a "busy" state.
@@ -145,8 +180,12 @@ const useStoreBase = create(
           throw new Error('Image generation failed or was aborted.')
         }
 
+        // Strip the chroma-key background out so the sticker has a real
+        // transparent background instead of a solid color block.
+        const transparent = await removeChromaKeyBackground(result)
+
         // Store the output image and update the photo's state to not busy.
-        imageData.outputs[id] = result
+        imageData.outputs[id] = transparent
         set(state => {
           const photo = state.photos.find(p => p.id === id)
           if (photo) {
@@ -184,6 +223,7 @@ const useStoreBase = create(
     setView: view => set({currentView: view}),
     setZoom: zoom => set({zoom: zoom}),
     setErrorMessage: message => set({errorMessage: message}),
+    setSuccessMessage: message => set({successMessage: message}),
 
     // --- STICKER QUEUE ACTIONS --- //
 
@@ -245,11 +285,79 @@ const useStoreBase = create(
       } finally {
         set({stickerQueueDownloading: false})
       }
-    }
-  }))
-)
+    },
 
+    // --- TELEGRAM EXPORT ACTIONS --- //
 
-export const useStore = createSelectorHooks(useStoreBase);
-// Initialize the app when the module is first loaded.
-useStore.getState().init()
+    /*
+     * Called once the Telegram Login Widget fires. Re-verifies the login server-side
+     * (never trust client data) before persisting it.
+     */
+    handleTelegramAuth: async authData => {
+      try {
+        const {user} = await verifyTelegramLogin(authData)
+        localStorage.setItem('pixelBoothTelegramAuth', JSON.stringify(authData))
+        set({telegramAuth: authData})
+        get().setSuccessMessage(`Connected to Telegram as ${user.first_name}!`)
+      } catch (error) {
+        console.error('Telegram login verification failed:', error)
+        get().setErrorMessage('Could not verify Telegram login. Please try again.')
+      }
+    },
+
+    logoutTelegram: () => {
+      localStorage.removeItem('pixelBoothTelegramAuth')
+      localStorage.removeItem('pixelBoothTelegramPackName')
+      set({telegramAuth: null, telegramPackName: null})
+    },
+
+    /*
+     * Exports a photo to the user's personal Telegram sticker pack — creating the
+     * pack on the first export, and adding to it on every export after that.
+     * @param {string} photoId - The ID of the photo to export.
+     */
+    exportToTelegram: async photoId => {
+      const {telegramAuth, telegramPackName} = get()
+      if (!telegramAuth) {
+        get().setErrorMessage('Connect your Telegram account first.')
+        return
+      }
+
+      const photo = get().photos.find(p => p.id === photoId)
+      const stickerBase64 = imageData.outputs[photoId]
+      if (!stickerBase64) return
+
+      const emoji = photo?.mode === 'custom' ? '✏️' : modes[photo?.mode]?.emoji
+      set({telegramExporting: true})
+
+      try {
+        if (telegramPackName) {
+          const result = await addStickerToPack({
+            authData: telegramAuth,
+            packName: telegramPackName,
+            stickerBase64,
+            emoji
+          })
+          get().setSuccessMessage('Added to your Telegram sticker pack!')
+          return result
+        } else {
+          const result = await createStickerPack({
+            authData: telegramAuth,
+            title: 'My PixelBoof Stickers',
+            stickerBase64,
+            emoji
+          })
+          localStorage.setItem('pixelBoothTelegramPackName', result.packName)
+          set({telegramPackName: result.packName})
+          get().setSuccessMessage('Your Telegram sticker pack is ready!')
+          return result
+        }
+      } catch (error) {
+        console.error('Telegram export failed:', error)
+        get().setErrorMessage(error.message || 'Could not export to Telegram.')
+      } finally {
+        set({telegramExporting: false})
+      }
+    },
+
+    // --- SIGNAL EXPORT ACTIONS --- 

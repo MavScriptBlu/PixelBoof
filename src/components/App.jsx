@@ -11,8 +11,10 @@ import GalleryView from './Gallery/GalleryView'
 import Disclaimer from './modals/Disclaimer'
 import Tutorial from './modals/Tutorial'
 import ErrorToast from './modals/ErrorToast'
+import SuccessToast from './modals/SuccessToast'
 import FocusedPhotoModal from './modals/FocusedPhotoModal'
 import StickerQueueModal from './modals/StickerQueueModal'
+import ThemeSelector from './modals/ThemeSelector'
 import './App.css'
 
 /*
@@ -25,6 +27,7 @@ export default function App() {
   const currentView = useStore.useCurrentView()
   const showDisclaimer = useStore.useShowDisclaimer()
   const showTutorial = useStore.useShowTutorial()
+  const showThemeSelector = useStore.useShowThemeSelector()
 
   // Local state for UI concerns that don't need to be global.
   const [focusedId, setFocusedId] = useState(null)
@@ -83,7 +86,9 @@ export default function App() {
       {/* Global Modals & Toasts */}
       {showDisclaimer && <Disclaimer />}
       {showTutorial && <Tutorial />}
+      {showThemeSelector && <ThemeSelector />}
       <ErrorToast />
+      <SuccessToast />
 
       {/* Main App Layout */}
       <Header />
@@ -102,12 +107,4 @@ export default function App() {
         {currentView === 'camera' ? (
           <CameraView onPhotoClick={handlePhotoClick} />
         ) : (
-          <GalleryView
-            onPhotoClick={handlePhotoClick}
-            onShowStickerQueue={handleShowStickerQueue}
-          />
-        )}
-      </div>
-    </main>
-  )
-}
+          <GalleryVi

@@ -6,6 +6,7 @@
 import {useState, useCallback} from 'react'
 import {useStore} from '../../lib/store'
 import modes from '../../lib/modes'
+import themes from '../../lib/themes'
 import './ModeSelector.css'
 
 /*
@@ -43,13 +44,19 @@ function Tooltip({hoveredMode, position}) {
 
 /*
  * Renders the horizontal list of selectable creative modes (lenses).
+ * Only shows modes belonging to the currently active theme.
  * It allows the user to switch between different AI generation styles.
  */
 export default function ModeSelector() {
   const activeMode = useStore.useActiveMode()
+  const activeTheme = useStore.useActiveTheme()
   const {setMode} = useStore.getState()
   const [hoveredMode, setHoveredMode] = useState(null)
   const [tooltipPosition, setTooltipPosition] = useState({top: 0, left: 0})
+
+  // Filter modes to only include those in the current theme.
+  const themeModeKeys = themes[activeTheme]?.modes || Object.keys(modes)
+  const themeModes = Object.entries(modes).filter(([key]) => themeModeKeys.includes(key))
 
   /*
    * Handles mouse hover over a mode button to show its tooltip.
@@ -89,7 +96,7 @@ export default function ModeSelector() {
             <span>❓</span> <span>Random</span>
           </button>
         </li>
-        {Object.entries(modes).map(([key, {name, emoji, prompt}]) => (
+        {themeModes.map(([key, {name, emoji, prompt}]) => (
           <li
             key={key}
             onMouseEnter={e => handleModeHover({key, prompt, name}, e)}

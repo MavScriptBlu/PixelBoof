@@ -39,6 +39,7 @@ const getDistance = touches => {
 export default function CameraView({onPhotoClick}) {
   const zoom = useStore.useZoom()
   const activeMode = useStore.useActiveMode()
+  const activeTheme = useStore.useActiveTheme()
   const showTutorial = useStore.useShowTutorial()
   const showDisclaimer = useStore.useShowDisclaimer()
   const {setZoom, snapPhoto} = useStore.getState()
@@ -52,6 +53,9 @@ export default function CameraView({onPhotoClick}) {
   const streamRef = useRef(null)
   const pinchStartZoomRef = useRef(1)
   const initialPinchDistRef = useRef(0)
+
+  // Ship-Them theme needs 2 people — capture landscape instead of square.
+  const isShipTheme = activeTheme === 'ship'
 
 
   /*
@@ -116,6 +120,7 @@ export default function CameraView({onPhotoClick}) {
 
   /*
    * Captures a frame from the video, sends it for processing, and creates a photo.
+   * For Ship-Them theme, captures a wider landscape crop to fit two people.
    */
   const takePhoto = () => {
     const video = videoRef.current
@@ -123,28 +128,42 @@ export default function CameraView({onPhotoClick}) {
 
     const {videoWidth, videoHeight} = video
 
-    // Calculate source dimensions for a centered, square crop from the video feed, considering zoom.
-    const squareSize = canvas.width
-    const sourceSize = Math.min(videoWidth, videoHeight) / zoom
-    const sourceX = (videoWidth - sourceSize) / 2
-    const sourceY = (videoHeight - sourceSize) / 2
+    if (isShipTheme) {
+      // Landscape crop (4:3) for two people side by side.
+      // Use full video height capped to what fits, then derive width at 4:3.
+      const captureHeight = Math.min(videoHeight, videoWidth * (3 / 4))
+      const captureWidth = captureHeight * (4 / 3)
+      canvas.width = Math.round(captureWidth)
+      canvas.height = Math.round(captureHeight)
 
-    // Draw the mirrored and cropped video frame onto the canvas.
-    ctx.clearRect(0, 0, squareSize, squareSize)
-    ctx.setTransform(1, 0, 0, 1, 0, 0)
-    ctx.scale(-1, 1) // Mirror horizontally
+      const sourceX = (videoWidth - captureWidth) / 2
+      const sourceY = (videoHeight - captureHeight) / 2
 
-    ctx.drawImage(
-      video,
-      sourceX,
-      sourceY,
-      sourceSize,
-      sourceSize,
-      -squareSize,
-      0,
-      squareSize,
-      squareSize
-    )
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.setTransform(1, 0, 0, 1, 0, 0)
+      // Mirror horizontally so the preview matches what is captured.
+      ctx.scale(-1, 1)
+      ctx.drawImage(
+        video,
+        sourceX, sourceY, captureWidth, captureHeight,
+        -canvas.width, 0, canvas.width, canvas.height
+      )
+    } else {
+      // Standard square crop.
+      const squareSize = canvas.width
+      const sourceSize = Math.min(videoWidth, videoHeight) / zoom
+      const sourceX = (videoWidth - sourceSize) / 2
+      const sourceY = (videoHeight - sourceSize) / 2
+
+      ctx.clearRect(0, 0, squareSize, squareSize)
+      ctx.setTransform(1, 0, 0, 1, 0, 0)
+      ctx.scale(-1, 1)
+      ctx.drawImage(
+        video,
+        sourceX, sourceY, sourceSize, sourceSize,
+        -squareSize, 0, squareSize, squareSize
+      )
+    }
 
     snapPhoto(
       canvas.toDataURL('image/jpeg'),
@@ -158,7 +177,7 @@ export default function CameraView({onPhotoClick}) {
 
 
   // --- TOUCH HANDLERS FOR PINCH-ZOOM --- //
-  
+
   const handleVideoTouchStart = e => {
     if (e.touches.length === 2) {
       initialPinchDistRef.current = getDistance(e.touches)
@@ -194,6 +213,14 @@ export default function CameraView({onPhotoClick}) {
           }}
         />
         {didJustSnap && <div className="flash" />}
+
+        {/* Ship-Them hint: remind users to get 2 people in frame */}
+        {videoActive && isShipTheme && (
+          <div className="ship-hint">
+            💑 GET 2 PEOPLE IN FRAME
+          </div>
+        )}
+
         {!videoActive && (
           <button
             className="startButton"

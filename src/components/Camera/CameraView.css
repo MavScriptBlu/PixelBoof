@@ -120,3 +120,22 @@
     font-size: 36px;
   }
 }
+
+/* ─── SHIP-THEM HINT ────────────────────────────────────────────────────────── */
+
+.ship-hint {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid #ffcc00;
+  color: #ffcc00;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  padding: 6px 14px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+}

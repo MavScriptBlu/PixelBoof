@@ -208,61 +208,61 @@ export default {
   furAuto: {
     name: 'Spirit Animal',
     emoji: '🐾',
-    prompt: `Study the person's features, energy, and personality, then choose the anthropomorphic animal species that best fits their vibe and transform them into that fursona. The art style should be semi-cartoon, semi-realistic with a subtle holographic foil sheen on the fur or scales. Preserve their unique personal details: piercings, glasses, hair color, jewelry, tattoos.`
+    prompt: `Study the person's features, energy, and personality, then choose the anthropomorphic animal species that best fits their vibe and transform them into that animal form. The art style should be semi-cartoon, semi-realistic with a subtle holographic foil sheen on the fur or scales. Preserve their unique personal details: piercings, glasses, hair color, jewelry, tattoos.`
   },
 
   furFox: {
     name: 'Fox',
     emoji: '🦊',
-    prompt: `Transform the person in the photo into a semi-cartoon, semi-realistic anthropomorphic fox fursona character — elegant pointed ears, a full bushy tail with a white tip, and bright expressive eyes that capture the person's personality. Preserve their unique features: piercings, glasses, hair color, jewelry. Add a subtle holographic foil sheen to the fur.`
+    prompt: `Transform the person in the photo into a semi-cartoon, semi-realistic anthropomorphic fox character — elegant pointed ears, a full bushy tail with a white tip, and bright expressive eyes that capture the person's personality. Preserve their unique features: piercings, glasses, hair color, jewelry. Add a subtle holographic foil sheen to the fur.`
   },
 
   furWolf: {
     name: 'Wolf',
     emoji: '🐺',
-    prompt: `Transform the person in the photo into a semi-cartoon, semi-realistic anthropomorphic wolf fursona character — sharp ears, a powerful but approachable presence, and intense expressive eyes. Preserve their unique features: piercings, glasses, hair color, jewelry. Add a subtle holographic foil sheen to the fur coat.`
+    prompt: `Transform the person in the photo into a semi-cartoon, semi-realistic anthropomorphic wolf character — sharp ears, a powerful but approachable presence, and intense expressive eyes. Preserve their unique features: piercings, glasses, hair color, jewelry. Add a subtle holographic foil sheen to the fur coat.`
   },
 
   furCat: {
     name: 'Cat',
     emoji: '🐱',
-    prompt: `Transform the person in the photo into a semi-cartoon, semi-realistic anthropomorphic cat fursona character — soft rounded ears, a sleek tail, and elegant graceful features with bright expressive eyes. Preserve their unique features: piercings, glasses, hair color, jewelry. Add a subtle holographic foil sheen to the fur.`
+    prompt: `Transform the person in the photo into a semi-cartoon, semi-realistic anthropomorphic cat character — soft rounded ears, a sleek tail, and elegant graceful features with bright expressive eyes. Preserve their unique features: piercings, glasses, hair color, jewelry. Add a subtle holographic foil sheen to the fur.`
   },
 
   furOwl: {
     name: 'Owl',
     emoji: '🦉',
-    prompt: `Transform the person in the photo into a semi-cartoon, semi-realistic anthropomorphic owl fursona character — large expressive eyes with feathered brows, tufted ears, detailed feather patterns, and a wise yet approachable demeanor. Preserve their unique features: piercings, glasses, jewelry. Add a subtle holographic foil sheen to the plumage.`
+    prompt: `Transform the person in the photo into a semi-cartoon, semi-realistic anthropomorphic owl character — large expressive eyes with feathered brows, tufted ears, detailed feather patterns, and a wise yet approachable demeanor. Preserve their unique features: piercings, glasses, jewelry. Add a subtle holographic foil sheen to the plumage.`
   },
 
   furDragon: {
     name: 'Dragon',
     emoji: '🐉',
-    prompt: `Transform the person in the photo into a semi-cartoon, semi-realistic anthropomorphic dragon fursona character — elegant curved horns, iridescent scaled skin, expressive eyes with vertical pupils, and a majestic commanding presence. Preserve their unique features: piercings, glasses, jewelry. Add a dramatic holographic foil sheen to the scales.`
+    prompt: `Transform the person in the photo into a semi-cartoon, semi-realistic anthropomorphic dragon character — elegant curved horns, iridescent scaled skin, expressive eyes with vertical pupils, and a majestic commanding presence. Preserve their unique features: piercings, glasses, jewelry. Add a dramatic holographic foil sheen to the scales.`
   },
 
   furPanda: {
     name: 'Panda',
     emoji: '🐼',
-    prompt: `Transform the person in the photo into a semi-cartoon, semi-realistic anthropomorphic giant panda fursona character — the classic black-and-white markings with fluffy rounded ears and a warm, gentle, expressive face. Preserve their unique features: piercings, glasses, hair color, jewelry. Add a soft holographic foil sheen to the fur.`
+    prompt: `Transform the person in the photo into a semi-cartoon, semi-realistic anthropomorphic giant panda character — the classic black-and-white markings with fluffy rounded ears and a warm, gentle, expressive face. Preserve their unique features: piercings, glasses, hair color, jewelry. Add a soft holographic foil sheen to the fur.`
   },
 
   furRabbit: {
     name: 'Rabbit',
     emoji: '🐰',
-    prompt: `Transform the person in the photo into a semi-cartoon, semi-realistic anthropomorphic rabbit fursona character — long expressive ears, a fluffy cottontail, bright eyes, and a sweet yet spirited personality in their expression. Preserve their unique features: piercings, glasses, hair color, jewelry. Add a subtle holographic foil sheen to the fur.`
+    prompt: `Transform the person in the photo into a semi-cartoon, semi-realistic anthropomorphic rabbit character — long expressive ears, a fluffy cottontail, bright eyes, and a sweet yet spirited personality in their expression. Preserve their unique features: piercings, glasses, hair color, jewelry. Add a subtle holographic foil sheen to the fur.`
   },
 
   furTiger: {
     name: 'Tiger',
     emoji: '🐯',
-    prompt: `Transform the person in the photo into a semi-cartoon, semi-realistic anthropomorphic tiger fursona character — bold dramatic stripes, fierce but friendly eyes, and a confident powerful presence with a warm undercurrent. Preserve their unique features: piercings, glasses, hair color, jewelry. Add a dramatic holographic foil sheen to the striped coat.`
+    prompt: `Transform the person in the photo into a semi-cartoon, semi-realistic anthropomorphic tiger character — bold dramatic stripes, fierce but friendly eyes, and a confident powerful presence with a warm undercurrent. Preserve their unique features: piercings, glasses, hair color, jewelry. Add a dramatic holographic foil sheen to the striped coat.`
   },
 
   furPenguin: {
     name: 'Penguin',
     emoji: '🐧',
-    prompt: `Transform the person in the photo into a semi-cartoon, semi-realistic anthropomorphic penguin fursona character — sleek tuxedo-like black and white body, expressive eyes, flipper hands, and an endearingly charming personality. Preserve their unique features: piercings, glasses, accessories. Add a subtle holographic foil sheen to the feathers.`
+    prompt: `Transform the person in the photo into a semi-cartoon, semi-realistic anthropomorphic penguin character — sleek tuxedo-like black and white body, expressive eyes, flipper hands, and an endearingly charming personality. Preserve their unique features: piercings, glasses, accessories. Add a subtle holographic foil sheen to the feathers.`
   },
 
   // ─── TRADING CARDS THEME ─────────────────────────────────────────────────── //

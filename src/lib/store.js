@@ -172,7 +172,7 @@ const useStoreBase = create(
         // Call the generative model.
         const result = await gen({
           model,
-          prompt: `${promptText} ${stickerPromptSuffix}`,
+          prompt: `${stickerPromptSuffix}\n\nSubject and style: ${promptText}`,
           inputFile: b64
         })
 

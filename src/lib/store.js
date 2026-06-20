@@ -17,7 +17,7 @@ import {createStickerPack, addStickerToPack, verifyTelegramLogin} from './telegr
 import {exportForSignal} from './signal'
 import {removeChromaKeyBackground, CHROMA_KEY_HEX} from './backgroundRemoval'
 
-const model = 'gemini-2.5-flash-image'
+const model = 'gemini-3.1-flash-image'
 const modeKeys = Object.keys(modes)
 
 // A consistent suffix added to all prompts to guide the AI into generating a sticker-like image.

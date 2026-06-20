@@ -361,3 +361,37 @@ const useStoreBase = create(
     },
 
     // --- SIGNAL EXPORT ACTIONS --- 
+    /*
+     * Formats a photo to Signal's sticker spec and hands it off via the share
+     * sheet (or a download as a fallback) for the user to add via Signal's own
+     * sticker pack tools.
+     * @param {string} photoId - The ID of the photo to export.
+     */
+    exportToSignal: async photoId => {
+      const stickerBase64 = imageData.outputs[photoId]
+      if (!stickerBase64) return
+
+      set({signalExporting: true})
+      try {
+        const {method} = await exportForSignal(stickerBase64, `pixelboof-${photoId}.png`)
+        if (method === 'share') {
+          get().setSuccessMessage('Sent to Signal! Add it to a pack from there.')
+        } else if (method === 'download') {
+          get().setSuccessMessage(
+            "Saved! Open Signal's Sticker Pack Maker to build your pack."
+          )
+        }
+      } catch (error) {
+        console.error('Signal export failed:', error)
+        get().setErrorMessage('Could not prep that sticker for Signal.')
+      } finally {
+        set({signalExporting: false})
+      }
+    }
+  }))
+)
+
+
+export const useStore = createSelectorHooks(useStoreBase);
+// Initialize the app when the module is first loaded.
+useStore.getState().init()

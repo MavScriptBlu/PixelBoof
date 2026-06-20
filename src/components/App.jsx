@@ -107,4 +107,12 @@ export default function App() {
         {currentView === 'camera' ? (
           <CameraView onPhotoClick={handlePhotoClick} />
         ) : (
-          <GalleryVi
+          <GalleryView
+            onPhotoClick={handlePhotoClick}
+            onShowStickerQueue={handleShowStickerQueue}
+          />
+        )}
+      </div>
+    </main>
+  )
+}

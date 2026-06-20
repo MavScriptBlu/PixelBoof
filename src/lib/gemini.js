@@ -11,7 +11,12 @@ import {limitFunction} from 'p-limit'
 const timeoutMs = 123_333 // Max time for a single API request.
 const maxRetries = 5 // Max number of retries on failure.
 const baseDelay = 3_000 // Base delay for exponential backoff.
-const ai = new GoogleGenAI({apiKey: import.meta.env.VITE_GEMINI_API_KEY})
+// Nano Banana image models live on v1, not v1beta — the SDK defaults to
+// v1beta so we have to override it explicitly or every request 400s.
+const ai = new GoogleGenAI({
+  apiKey: import.meta.env.VITE_GEMINI_API_KEY,
+  apiVersion: 'v1'
+})
 
 /**
  * A rate-limited and resilient wrapper around the Google GenAI API call.

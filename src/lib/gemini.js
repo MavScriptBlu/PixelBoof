@@ -11,11 +11,12 @@ import {limitFunction} from 'p-limit'
 const timeoutMs = 123_333 // Max time for a single API request.
 const maxRetries = 5 // Max number of retries on failure.
 const baseDelay = 3_000 // Base delay for exponential backoff.
-// Nano Banana image models live on v1, not v1beta — the SDK defaults to
-// v1beta so we have to override it explicitly or every request 400s.
+// Image generation models and responseModalities live on v1beta, not v1.
+// The v1 stable API does not recognize the responseModalities field in
+// GenerationConfig — it's a v1beta-only feature, so we must stay on v1beta.
 const ai = new GoogleGenAI({
   apiKey: import.meta.env.VITE_GEMINI_API_KEY,
-  apiVersion: 'v1'
+  apiVersion: 'v1beta'
 })
 
 /**
@@ -57,7 +58,7 @@ export default limitFunction(
 
         // Make the API call to the Gemini model.
         // NOTE: responseModalities must include both 'TEXT' and 'IMAGE' for the
-        // gemini-2.5-flash-image model — passing only ['IMAGE'] causes generation to fail.
+        // image model — passing only ['IMAGE'] causes generation to fail.
         const modelPromise = ai.models.generateContent(
           {
             model,

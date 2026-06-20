@@ -50,7 +50,7 @@ function Tooltip({hoveredMode, position}) {
 export default function ModeSelector() {
   const activeMode = useStore.useActiveMode()
   const activeTheme = useStore.useActiveTheme()
-  const {setMode} = useStore.getState()
+  const {setMode, setShowThemeSelector} = useStore.getState()
   const [hoveredMode, setHoveredMode] = useState(null)
   const [tooltipPosition, setTooltipPosition] = useState({top: 0, left: 0})
 
@@ -80,6 +80,16 @@ export default function ModeSelector() {
   return (
     <>
       <ul className="modeSelector">
+        <li key="theme-switch">
+          <button
+            className="theme-switch-btn"
+            onClick={() => setShowThemeSelector(true)}
+            aria-label="Switch theme"
+            title="Switch theme"
+          >
+            <span>🎨</span> <span>Theme</span>
+          </button>
+        </li>
         <li
           key="random"
           onMouseEnter={e => handleModeHover({key: 'random', name: 'Random'}, e)}

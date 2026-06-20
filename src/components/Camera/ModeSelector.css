@@ -78,3 +78,19 @@
     padding: 4px 8px;
   }
 }
+
+
+/* -- THEME SWITCH BUTTON -- */
+
+.theme-switch-btn {
+  opacity: 0.5;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 4px !important;
+  padding: 5px 10px !important;
+  transition: opacity 0.2s, border-color 0.2s;
+}
+
+.theme-switch-btn:hover {
+  opacity: 1 !important;
+  border-color: rgba(255, 255, 255, 0.6) !important;
+}

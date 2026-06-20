@@ -222,6 +222,7 @@ const useStoreBase = create(
     setMode: mode => set({activeMode: mode}),
     setView: view => set({currentView: view}),
     setZoom: zoom => set({zoom: zoom}),
+    setShowThemeSelector: val => set({showThemeSelector: val}),
     setErrorMessage: message => set({errorMessage: message}),
     setSuccessMessage: message => set({successMessage: message}),
 
@@ -393,5 +394,4 @@ const useStoreBase = create(
 
 
 export const useStore = createSelectorHooks(useStoreBase);
-// Initialize the app when the module is first loaded.
-useStore.getState().init()
+// Initialize the 

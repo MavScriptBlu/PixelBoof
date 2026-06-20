@@ -89,6 +89,14 @@ export default limitFunction(
           return
         }
 
+        // Log detailed error info so we can diagnose API failures (400s, etc.)
+        const errDetails = error?.errorDetails ?? error?.status ?? error?.statusText ?? ''
+        console.error(
+          'Attempt ' + (attempt + 1) + ' error [' + (error?.status ?? error?.name) + ']:',
+          error?.message,
+          errDetails ? JSON.stringify(errDetails) : ''
+        )
+
         // If this was the last attempt, re-throw the error to be caught by the caller.
         if (attempt === maxRetries - 1) {
           throw error
@@ -96,9 +104,7 @@ export default limitFunction(
 
         // Wait before retrying, with an exponentially increasing delay.
         const delay = baseDelay * 2 ** attempt
-        console.warn(
-          `Attempt ${attempt + 1} failed, retrying after ${delay}ms...`
-        )
+        console.warn('Retrying after ' + delay + 'ms...')
         await new Promise(res => setTimeout(res, delay))
       }
     }

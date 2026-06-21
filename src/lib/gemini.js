@@ -28,7 +28,7 @@ const ai = new GoogleGenAI({
  * - Implements an exponential backoff retry mechanism for transient network or API errors.
  *
  * @param {object} params - The parameters for the generation request.
- * @param {string} params.model - The generative model to use (e.g., 'gemini-2.5-flash-image').
+ * @param {string} params.model - The generative model to use.
  * @param {string} params.prompt - The text prompt to guide the image generation.
  * @param {string} [params.inputFile] - The base64-encoded input image from the user's camera.
  * @param {AbortSignal} [params.signal] - An optional AbortSignal to cancel the request.
@@ -70,14 +70,35 @@ export default limitFunction(
 
         const response = await Promise.race([modelPromise, timeoutPromise])
 
+        // Log prompt-level block if present (happens before any candidate is generated)
+        if (response.promptFeedback?.blockReason) {
+          console.error('[Gemini] Prompt blocked:', response.promptFeedback.blockReason)
+          throw new Error(`Prompt blocked: ${response.promptFeedback.blockReason}`)
+        }
+
         // Validate the response and extract the generated image data.
         if (!response.candidates || response.candidates.length === 0) {
           throw new Error('No candidates in response')
         }
 
-        const inlineDataPart = response.candidates[0].content.parts.find(
-          p => p.inlineData
-        )
+        const candidate = response.candidates[0]
+
+        // Safety blocks return a candidate with finishReason='SAFETY' but no content.
+        // Logging the safetyRatings here helps diagnose which category tripped.
+        if (!candidate.content) {
+          const reason = candidate.finishReason ?? 'unknown'
+          const ratings = candidate.safetyRatings
+            ? JSON.stringify(candidate.safetyRatings)
+            : 'none'
+          console.error(
+            `[Gemini] Content blocked on attempt ${attempt + 1}.`,
+            `finishReason: ${reason}`,
+            `safetyRatings: ${ratings}`
+          )
+          throw new Error(`Content blocked by safety filter (${reason})`)
+        }
+
+        const inlineDataPart = candidate.content.parts.find(p => p.inlineData)
         if (!inlineDataPart) {
           throw new Error('No inline data found in response')
         }

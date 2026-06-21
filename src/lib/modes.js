@@ -208,7 +208,7 @@ export default {
   furAuto: {
     name: 'Spirit Animal',
     emoji: '🐾',
-    prompt: `Study the person's features, energy, and personality, then choose the anthropomorphic animal species that best fits their vibe and transform them into that animal form. The art style should be semi-cartoon, semi-realistic with a subtle holographic foil sheen on the fur or scales. Preserve their unique personal details: piercings, glasses, hair color, jewelry, tattoos.`
+    prompt: `Look at the person's photo and pick the animal that best matches their overall look and vibe — then transform them into a semi-cartoon, semi-realistic anthropomorphic version of that animal. The art style should have a subtle holographic foil sheen on the fur or scales. Preserve visible personal details: glasses, hair color, jewelry, and accessories.`
   },
 
   furFox: {
